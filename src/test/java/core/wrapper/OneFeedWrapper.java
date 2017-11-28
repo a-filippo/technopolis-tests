@@ -7,13 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class OneFeedWrapper extends WrapperBase {
-    private static By USER_NAME = By.cssSelector(".user-link");
-    private static By FEED_TEXT = By.cssSelector(".media-text_cnt_tx");
+    private static final By USER_NAME = By.cssSelector(".user-link");
+    private static final By FEED_TEXT = By.cssSelector(".media-text_cnt_tx");
 
-    private static By INTERVIEW_WRAPPER = By.cssSelector(".poll_lst");
-    private static By INTERVIEW_ANSWERS = By.cssSelector(".poll_n_tx");
+    private static final By INTERVIEW_WRAPPER = By.cssSelector(".poll_lst");
+    private static final By INTERVIEW_ANSWERS = By.cssSelector(".poll_n_tx");
 
-    private static By PLACE = By.cssSelector("a[class*='place-id-'][hrefattrs*='cmd=PopLayerMediaTopic']");
+    private static final By PLACE = By.cssSelector("a[class*='place-id-'][hrefattrs*='cmd=PopLayerMediaTopic']");
 
     public OneFeedWrapper(WebDriver driver, WebElement wrapper) {
         super(driver, wrapper);

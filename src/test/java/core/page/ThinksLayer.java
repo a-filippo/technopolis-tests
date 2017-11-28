@@ -33,14 +33,20 @@ public class ThinksLayer extends PageBase {
     public void check() {
         new WebDriverWait(driver, 10)
             .until(ExpectedConditions.visibilityOfElementLocated(MAIN_LAYER));
+
+        checkVisibilityElement("Леер невидим", MAIN_LAYER);
+        checkVisibilityElement("Текстарея невидима", MAIN_TEXTAREA);
+        checkVisibilityElement("Кнопка закрыть невидима", CLOSE_ELEMENT);
     }
 
     public void close(){
+        checkVisibilityElement("Кнопка закрыть невидима", CLOSE_ELEMENT);
         click(CLOSE_ELEMENT);
         checkLayerUnvisible();
     }
 
     public ThinksLayer writeMainText(String text){
+        checkVisibilityElement("Текстарея невидима", MAIN_TEXTAREA);
         type(MAIN_TEXTAREA, text);
         return this;
     }
@@ -48,6 +54,7 @@ public class ThinksLayer extends PageBase {
     public ThinksLayer submit(){
         checkVisibilityElement("Кнопка \"Поделиться\" невидима", BUTTON_SUBMIT);
         Assert.assertFalse("Кнопка \"Поделиться\" неактивна", hasClass(driver.findElement(BUTTON_SUBMIT), "__disabled"));
+        checkVisibilityElement("Леер невидим", MAIN_LAYER);
         click(BUTTON_SUBMIT);
         new WebDriverWait(driver, 3)
             .until(ExpectedConditions.invisibilityOfElementLocated(MAIN_LAYER));

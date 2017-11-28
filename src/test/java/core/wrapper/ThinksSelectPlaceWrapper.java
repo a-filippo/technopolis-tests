@@ -7,10 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ThinksSelectPlaceWrapper extends WrapperBase {
-    private static By INPUT_ADDRESS = By.cssSelector(".pform_map_search .it.search-input_it");
-    private static By CONTAINER_MAP = By.cssSelector(".pform_map_search .search-input");
-    private static By SUGGESTS = By.cssSelector(".pform_map_cnt .suggest .suggest_li");
-    private static By SUGGEST_TEXT = By.cssSelector(".ucard_info_name");
+    private static final By INPUT_ADDRESS = By.cssSelector(".pform_map_search .it.search-input_it");
+    private static final By CONTAINER_MAP = By.cssSelector(".pform_map_search .search-input");
+    private static final By SUGGESTS = By.cssSelector(".pform_map_cnt .suggest .suggest_li");
+    private static final By SUGGEST_TEXT = By.cssSelector(".ucard_info_name");
 
 
     public ThinksSelectPlaceWrapper(WebDriver driver, WebElement wrapper){
@@ -20,6 +20,7 @@ public class ThinksSelectPlaceWrapper extends WrapperBase {
     @Override
     public void check() {
         checkPresentElement("Инпут ввода адреса не найден", INPUT_ADDRESS);
+        checkPresentElement("Контейнер карты не найден", CONTAINER_MAP);
     }
 
     public ThinksSelectPlaceWrapper typeAddress(String address){

@@ -8,11 +8,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class InterviewThinksElement extends ThinksFormElementWrapper {
-    private static By INPUT_QUESTION_PLACEHOLDER = By.cssSelector(".itx.itx__placeholder");
-    private static By INPUT_QUESTION_TEXTAREA = By.cssSelector(".itx.posting-form_poll__question");
+    private static final By INPUT_QUESTION_PLACEHOLDER = By.cssSelector(".itx.itx__placeholder");
+    private static final By INPUT_QUESTION_TEXTAREA = By.cssSelector(".itx.posting-form_poll__question");
 
-    private static By INPUT_ANSWERS_PLACEHOLDER = By.cssSelector(".it.it__placeholder");
-    private static By INPUT_ANSWERS_TEXT = By.cssSelector(".it.posting-form_poll__answer");
+    private static final By INPUT_ANSWERS_PLACEHOLDER = By.cssSelector(".it.it__placeholder");
+    private static final By INPUT_ANSWERS_TEXT = By.cssSelector(".it.posting-form_poll__answer");
 
     public InterviewThinksElement(WebDriver driver, WebElement wrapper) {
         super(driver, wrapper);
