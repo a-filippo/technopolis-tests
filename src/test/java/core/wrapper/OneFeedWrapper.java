@@ -2,15 +2,11 @@ package core.wrapper;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import core.page.PageBase;
-
-public class OneFeedWrapper extends PageBase {
-    private WebElement wrapper;
+public class OneFeedWrapper extends WrapperBase {
     private static By USER_NAME = By.cssSelector(".user-link");
     private static By FEED_TEXT = By.cssSelector(".media-text_cnt_tx");
 
@@ -20,24 +16,22 @@ public class OneFeedWrapper extends PageBase {
     private static By PLACE = By.cssSelector("a[class*='place-id-'][hrefattrs*='cmd=PopLayerMediaTopic']");
 
     public OneFeedWrapper(WebDriver driver, WebElement wrapper) {
-        this.driver = driver;
-        this.wrapper = wrapper;
-        check();
+        super(driver, wrapper);
     }
 
     @Override
     public void check() {
-        Assert.assertNotNull("Имя пользователя не найдено", findElement(wrapper, USER_NAME));
-        Assert.assertNotNull("Блок с текстом не найден", findElement(wrapper, FEED_TEXT));
+        checkPresentElement("Имя пользователя не найдено", USER_NAME);
+        checkPresentElement("Блок с текстом не найден", FEED_TEXT);
     }
 
     public String getText(){
-        return findElement(wrapper, FEED_TEXT).getText();
+        return findElement(FEED_TEXT).getText();
     }
 
     public String[] getInterviewAnswers(){
-        WebElement interviewWrapper = findElement(wrapper, INTERVIEW_WRAPPER);
-        Assert.assertNotNull("Блок опроса не найден", interviewWrapper);
+        WebElement interviewWrapper = findElement(INTERVIEW_WRAPPER);
+        checkPresentElement("Блок опроса не найден", interviewWrapper);
 
         List<WebElement> interviewAnswers = interviewWrapper.findElements(INTERVIEW_ANSWERS);
         String[] interviewAnswersText = new String[interviewAnswers.size()];
@@ -48,8 +42,8 @@ public class OneFeedWrapper extends PageBase {
     }
 
     public String getPlace(){
-        WebElement place = findElement(wrapper, PLACE);
-        Assert.assertNotNull("Геопозиция к посту не приложена", place);
+        WebElement place = findElement(PLACE);
+        checkPresentElement("Геопозиция к посту не приложена", place);
         return place.getText();
     }
 }

@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.Assert.fail;
 
-public class TestBase {
+abstract public class TestBase {
 
     protected ChromeDriver driver;
 

@@ -6,7 +6,7 @@ import org.junit.Test;
 import core.wrapper.OneFeedWrapper;
 import core.page.SessionPage;
 import core.page.ThinksPage;
-import core.ThinksSelectPlace;
+import core.wrapper.ThinksSelectPlaceWrapper;
 import core.page.UserMainPage;
 import model.TestBot;
 
@@ -23,11 +23,8 @@ public class ThinkTest extends TestBase {
         UserMainPage userMainPageHelper = new UserMainPage(driver);
         userMainPageHelper.clickOpenThink();
 
-        ThinksPage thinksHelper = new ThinksPage(driver);
-        thinksHelper.close();
-
-        // проверить закрытость
-
+        new ThinksPage(driver)
+            .close();
     }
 
     @Test
@@ -37,12 +34,12 @@ public class ThinkTest extends TestBase {
         UserMainPage userMainPageHelper = new UserMainPage(driver);
         userMainPageHelper.clickOpenThink();
 
-        ThinksPage thinksHelper = new ThinksPage(driver)
-            .writeMainText("Базовая публикация 1")
+        new ThinksPage(driver)
+            .writeMainText("Базовая публикация")
             .submit();
 
         OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
-        Assert.assertEquals("Базовая публикация 1", lastFeed.getText());
+        Assert.assertEquals("Базовая публикация", lastFeed.getText());
     }
 
     @Test
@@ -62,7 +59,6 @@ public class ThinkTest extends TestBase {
 
         OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
         Assert.assertEquals("Земля вовсе не круглая\nИ не квадратная", lastFeed.getText());
-        // проверка
     }
 
     @Test
@@ -73,7 +69,7 @@ public class ThinkTest extends TestBase {
         userMainPageHelper.clickOpenThink();
 
         ThinksPage thinksHelper = new ThinksPage(driver)
-            .writeMainText("Земля вовсе не круглая");
+            .writeMainText("Земля вовсе не круглая (прикладываем опрос)");
 
         thinksHelper.addInterview()
             .typeAnswer(0, "Квадратная")
@@ -83,9 +79,8 @@ public class ThinkTest extends TestBase {
         thinksHelper.submit();
 
         OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
-        Assert.assertEquals("Земля вовсе не круглая", lastFeed.getText());
+        Assert.assertEquals("Земля вовсе не круглая (прикладываем опрос)", lastFeed.getText());
         Assert.assertArrayEquals(new String[]{"Квадратная", "Круглая", "Шарообразная"}, lastFeed.getInterviewAnswers());
-        // проверка
     }
 
     @Test
@@ -96,9 +91,9 @@ public class ThinkTest extends TestBase {
         userMainPageHelper.clickOpenThink();
 
         ThinksPage thinksHelper = new ThinksPage(driver)
-            .writeMainText("Земля вовсе не круглая");
+            .writeMainText("Земля вовсе не круглая (прикладываем метку на карте)");
 
-        ThinksSelectPlace selectPlace = thinksHelper.selectPlace()
+        ThinksSelectPlaceWrapper selectPlace = thinksHelper.selectPlace()
             .typeAddress("СПбПУ")
             .waitResultsLoading();
 
@@ -107,9 +102,7 @@ public class ThinkTest extends TestBase {
         thinksHelper.submit();
 
         OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
-        Assert.assertEquals("Земля вовсе не круглая", lastFeed.getText());
+        Assert.assertEquals("Земля вовсе не круглая (прикладываем метку на карте)", lastFeed.getText());
         Assert.assertEquals(addressName, lastFeed.getPlace());
-
-
     }
 }

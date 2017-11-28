@@ -15,8 +15,8 @@ public class SessionPage extends PageBase {
 
     @Override
     public void check() {
-        checkExistElement("Поле ввода емэйла не найдено",  By.id("field_email"));
-        checkExistElement("Поле ввода пароля не найдено",  By.id("field_password"));
+        checkPresentElement("Поле ввода емэйла не найдено",  By.id("field_email"));
+        checkPresentElement("Поле ввода пароля не найдено",  By.id("field_password"));
     }
 
     public void doLogin(TestBot testBot) {

@@ -1,27 +1,24 @@
 package core.wrapper.thinksformelement;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import core.wrapper.thinksformelement.ThinksElementWrapper;
-
-public class TextThinksElement extends ThinksElementWrapper {
+public class TextThinksElement extends ThinksFormElementWrapper {
     private static final By TEXTAREA = By.cssSelector(".posting-form_sctn__text .textWrap");
 
-    public TextThinksElement(WebDriver driver, By by) {
-        super(driver, by);
+    public TextThinksElement(WebDriver driver, WebElement wrapper) {
+        super(driver, wrapper);
     }
 
     @Override
     public void check() {
-        Assert.assertNotNull("Текстарея не найдена", findElementInWrapper(TEXTAREA));
+        checkPresentElement("Текстарея не найдена", TEXTAREA);
     }
 
     public void type(String text){
-        WebElement textarea = findElementInWrapper(TEXTAREA);
-        Assert.assertNotNull("Текстарея не найдена", textarea);
+        WebElement textarea = findElement(TEXTAREA);
+        checkPresentElement("Текстарея не найдена", textarea);
         textarea.sendKeys(text);
     }
 }

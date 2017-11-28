@@ -19,11 +19,7 @@ public class UserMainPage extends PageBase {
 
     @Override
     public void check() {
-        checkExistElement("Форма постинга не найдена", By.id("hook_Block_PostingForm"));
-    }
-
-    public void clickGroupsOnToolbar() {
-        click(By.xpath(".//*[contains(@hrefattrs, 'st.cmd=userAltGroup')]"));
+        checkPresentElement("Форма постинга не найдена", By.id("hook_Block_PostingForm"));
     }
 
     public void clickOpenThink(){

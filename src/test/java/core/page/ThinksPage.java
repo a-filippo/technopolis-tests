@@ -3,19 +3,20 @@ package core.page;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import core.wrapper.thinksformelement.InterviewThinksElement;
 import core.wrapper.thinksformelement.TextThinksElement;
-import core.ThinksSelectPlace;
+import core.wrapper.ThinksSelectPlaceWrapper;
 
 public class ThinksPage extends PageBase {
     private static final By MAIN_LAYER = By.id("mtLayerMain");
     private static final By MAIN_TEXTAREA = By.id("posting_form_text_field");
     private static final By CLOSE_ELEMENT = By.cssSelector(".media-layer_close");
-    private static final By CHECKBOX_TO_STATUS = By.cssSelector(".posting-form_ac-status");
     private static final By BUTTON_SUBMIT = By.cssSelector("#mtLayerMain .form-actions input[type='submit']");
+
     private static final By BUTTON_ADD_TEXT = By.id("opentext");
     private static final By BUTTON_ADD_INTERVIEW = By.id("openpoll");
 
@@ -57,19 +58,25 @@ public class ThinksPage extends PageBase {
     public TextThinksElement addTextarea(){
         checkVisibilityElement("Элемент добавления текстареи не найден", BUTTON_ADD_TEXT);
         click(BUTTON_ADD_TEXT);
-        return new TextThinksElement(driver, LAST_THINKS_FORM_ELEMENT);
+        WebElement textThinksElement = findElement(LAST_THINKS_FORM_ELEMENT);
+        checkPresentElement("Элемент формы не найден", textThinksElement);
+        return new TextThinksElement(driver, textThinksElement);
     }
 
     public InterviewThinksElement addInterview(){
         checkVisibilityElement("Элемент добавления опроса не найден", BUTTON_ADD_INTERVIEW);
         click(BUTTON_ADD_INTERVIEW);
-        return new InterviewThinksElement(driver, LAST_THINKS_FORM_ELEMENT);
+        WebElement interviewThinksElement = findElement(LAST_THINKS_FORM_ELEMENT);
+        checkPresentElement("Элемент формы не найден", interviewThinksElement);
+        return new InterviewThinksElement(driver, interviewThinksElement);
     }
 
-    public ThinksSelectPlace selectPlace(){
+    public ThinksSelectPlaceWrapper selectPlace(){
         checkVisibilityElement("Элемент добавления места не найден", BUTTON_SELECT_PLACE);
         click(BUTTON_SELECT_PLACE);
-        return new ThinksSelectPlace(driver, SELECT_PLACE_BLOCK);
+        WebElement selectPlaceBlock = findElement(SELECT_PLACE_BLOCK);
+        checkPresentElement("Элемент формы не найден", selectPlaceBlock);
+        return new ThinksSelectPlaceWrapper(driver, selectPlaceBlock);
     }
 
     private void checkLayerUnvisible() {
