@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import core.wrapper.OneFeedWrapper;
 import core.page.SessionPage;
-import core.page.ThinksPage;
+import core.page.ThinksLayer;
 import core.wrapper.ThinksSelectPlaceWrapper;
 import core.page.UserMainPage;
 import model.TestBot;
@@ -20,10 +20,10 @@ public class ThinkTest extends TestBase {
     public void openCloseThink(){
         defaultAuthorization();
 
-        UserMainPage userMainPageHelper = new UserMainPage(driver);
-        userMainPageHelper.clickOpenThink();
+        UserMainPage userMainPage = new UserMainPage(driver);
+        userMainPage.clickOpenThink();
 
-        new ThinksPage(driver)
+        new ThinksLayer(driver)
             .close();
     }
 
@@ -31,14 +31,14 @@ public class ThinkTest extends TestBase {
     public void basePublication(){
         defaultAuthorization();
 
-        UserMainPage userMainPageHelper = new UserMainPage(driver);
-        userMainPageHelper.clickOpenThink();
+        UserMainPage userMainPage = new UserMainPage(driver);
+        userMainPage.clickOpenThink();
 
-        new ThinksPage(driver)
+        new ThinksLayer(driver)
             .writeMainText("Базовая публикация")
             .submit();
 
-        OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
+        OneFeedWrapper lastFeed = userMainPage.getLastFeed();
         Assert.assertEquals("Базовая публикация", lastFeed.getText());
     }
 
@@ -46,18 +46,18 @@ public class ThinkTest extends TestBase {
     public void basePublicationWithExtraTextarea(){
         defaultAuthorization();
 
-        UserMainPage userMainPageHelper = new UserMainPage(driver);
-        userMainPageHelper.clickOpenThink();
+        UserMainPage userMainPage = new UserMainPage(driver);
+        userMainPage.clickOpenThink();
 
-        ThinksPage thinksHelper = new ThinksPage(driver)
+        ThinksLayer thinksLayer = new ThinksLayer(driver)
             .writeMainText("Земля вовсе не круглая");
 
-        thinksHelper.addTextarea()
+        thinksLayer.addTextarea()
             .type("И не квадратная");
 
-        thinksHelper.submit();
+        thinksLayer.submit();
 
-        OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
+        OneFeedWrapper lastFeed = userMainPage.getLastFeed();
         Assert.assertEquals("Земля вовсе не круглая\nИ не квадратная", lastFeed.getText());
     }
 
@@ -65,21 +65,21 @@ public class ThinkTest extends TestBase {
     public void appendingInterview(){
         defaultAuthorization();
 
-        UserMainPage userMainPageHelper = new UserMainPage(driver);
-        userMainPageHelper.clickOpenThink();
+        UserMainPage userMainPage = new UserMainPage(driver);
+        userMainPage.clickOpenThink();
 
-        ThinksPage thinksHelper = new ThinksPage(driver)
-            .writeMainText("Земля вовсе не круглая (прикладываем опрос)");
+        ThinksLayer thinksLayer = new ThinksLayer(driver)
+            .writeMainText("Земля круглая?");
 
-        thinksHelper.addInterview()
+        thinksLayer.addInterview()
             .typeAnswer(0, "Квадратная")
             .typeAnswer(1, "Круглая")
             .typeAnswer(2, "Шарообразная");
 
-        thinksHelper.submit();
+        thinksLayer.submit();
 
-        OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
-        Assert.assertEquals("Земля вовсе не круглая (прикладываем опрос)", lastFeed.getText());
+        OneFeedWrapper lastFeed = userMainPage.getLastFeed();
+        Assert.assertEquals("Земля круглая?", lastFeed.getText());
         Assert.assertArrayEquals(new String[]{"Квадратная", "Круглая", "Шарообразная"}, lastFeed.getInterviewAnswers());
     }
 
@@ -87,22 +87,22 @@ public class ThinkTest extends TestBase {
     public void appendingPlace(){
         defaultAuthorization();
 
-        UserMainPage userMainPageHelper = new UserMainPage(driver);
-        userMainPageHelper.clickOpenThink();
+        UserMainPage userMainPage = new UserMainPage(driver);
+        userMainPage.clickOpenThink();
 
-        ThinksPage thinksHelper = new ThinksPage(driver)
-            .writeMainText("Земля вовсе не круглая (прикладываем метку на карте)");
+        ThinksLayer thinksLayer = new ThinksLayer(driver)
+            .writeMainText("Земля вовсе не круглая (докажем картой)");
 
-        ThinksSelectPlaceWrapper selectPlace = thinksHelper.selectPlace()
+        ThinksSelectPlaceWrapper selectPlace = thinksLayer.selectPlace()
             .typeAddress("СПбПУ")
             .waitResultsLoading();
 
         String addressName = selectPlace.clickFirstResult();
 
-        thinksHelper.submit();
+        thinksLayer.submit();
 
-        OneFeedWrapper lastFeed = userMainPageHelper.getLastFeed();
-        Assert.assertEquals("Земля вовсе не круглая (прикладываем метку на карте)", lastFeed.getText());
+        OneFeedWrapper lastFeed = userMainPage.getLastFeed();
+        Assert.assertEquals("Земля вовсе не круглая (докажем картой)", lastFeed.getText());
         Assert.assertEquals(addressName, lastFeed.getPlace());
     }
 }

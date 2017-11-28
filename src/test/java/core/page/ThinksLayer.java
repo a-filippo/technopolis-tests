@@ -11,7 +11,7 @@ import core.wrapper.thinksformelement.InterviewThinksElement;
 import core.wrapper.thinksformelement.TextThinksElement;
 import core.wrapper.ThinksSelectPlaceWrapper;
 
-public class ThinksPage extends PageBase {
+public class ThinksLayer extends PageBase {
     private static final By MAIN_LAYER = By.id("mtLayerMain");
     private static final By MAIN_TEXTAREA = By.id("posting_form_text_field");
     private static final By CLOSE_ELEMENT = By.cssSelector(".media-layer_close");
@@ -25,7 +25,7 @@ public class ThinksPage extends PageBase {
 
     private static final By LAST_THINKS_FORM_ELEMENT = By.cssSelector(".posting-form_sctn_w:last-child");
 
-    public ThinksPage(WebDriver driver) {
+    public ThinksLayer(WebDriver driver) {
         super(driver);
     }
 
@@ -40,12 +40,12 @@ public class ThinksPage extends PageBase {
         checkLayerUnvisible();
     }
 
-    public ThinksPage writeMainText(String text){
+    public ThinksLayer writeMainText(String text){
         type(MAIN_TEXTAREA, text);
         return this;
     }
 
-    public ThinksPage submit(){
+    public ThinksLayer submit(){
         checkVisibilityElement("Кнопка \"Поделиться\" невидима", BUTTON_SUBMIT);
         Assert.assertFalse("Кнопка \"Поделиться\" неактивна", hasClass(driver.findElement(BUTTON_SUBMIT), "__disabled"));
         click(BUTTON_SUBMIT);
