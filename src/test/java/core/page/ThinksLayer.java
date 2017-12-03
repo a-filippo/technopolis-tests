@@ -31,18 +31,15 @@ public class ThinksLayer extends PageBase {
 
     @Override
     public void check() {
-        new WebDriverWait(driver, 10)
-            .until(ExpectedConditions.visibilityOfElementLocated(MAIN_LAYER));
-
-        checkVisibilityElement("Леер невидим", MAIN_LAYER);
-        checkVisibilityElement("Текстарея невидима", MAIN_TEXTAREA);
-        checkVisibilityElement("Кнопка закрыть невидима", CLOSE_ELEMENT);
+        waitVisibilityElement("Леер невидим", MAIN_LAYER, 3);
+        waitVisibilityElement("Текстарея невидима", MAIN_TEXTAREA, 3);
+        waitVisibilityElement("Кнопка закрыть невидима", CLOSE_ELEMENT, 3);
     }
 
-    public void close(){
+    public ThinksLayer close(){
         checkVisibilityElement("Кнопка закрыть невидима", CLOSE_ELEMENT);
         click(CLOSE_ELEMENT);
-        checkLayerUnvisible();
+        return this;
     }
 
     public ThinksLayer writeMainText(String text){
@@ -56,9 +53,6 @@ public class ThinksLayer extends PageBase {
         Assert.assertFalse("Кнопка \"Поделиться\" неактивна", hasClass(driver.findElement(BUTTON_SUBMIT), "__disabled"));
         checkVisibilityElement("Леер невидим", MAIN_LAYER);
         click(BUTTON_SUBMIT);
-        new WebDriverWait(driver, 3)
-            .until(ExpectedConditions.invisibilityOfElementLocated(MAIN_LAYER));
-        checkLayerUnvisible();
         return this;
     }
 
@@ -86,7 +80,12 @@ public class ThinksLayer extends PageBase {
         return new ThinksSelectPlaceWrapper(driver, selectPlaceBlock);
     }
 
-    private void checkLayerUnvisible() {
-        checkUnvisibilityElement("Леер не закрылся", MAIN_LAYER);
+    public ThinksLayer checkLayerUnvisible() {
+        Assert.assertTrue(
+            "Леер не закрылся",
+            (new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.invisibilityOfElementLocated(MAIN_LAYER)))
+        );
+        return this;
     }
 }

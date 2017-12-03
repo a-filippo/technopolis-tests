@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import static org.junit.Assert.fail;
-
 abstract public class TestBase {
 
     protected ChromeDriver driver;

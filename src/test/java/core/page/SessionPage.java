@@ -19,19 +19,21 @@ public class SessionPage extends PageBase {
 
     @Override
     public void check() {
-        checkPresentElement("Поле ввода емэйла не найдено",  FIELD_EMAIL);
-        checkPresentElement("Поле ввода пароля не найдено",  FIELD_PASSWORD);
-        checkPresentElement("Кнопка отправки формы не найдена",  BUTTON_SUBMIT);
+        waitPresentElement("Поле ввода емэйла не найдено",  FIELD_EMAIL, 2);
+        waitPresentElement("Поле ввода пароля не найдено",  FIELD_PASSWORD, 2);
+        waitPresentElement("Кнопка отправки формы не найдена",  BUTTON_SUBMIT, 2);
     }
 
-    public void doLogin(TestBot testBot) {
-        checkPresentElement("Поле ввода емэйла не найдено",  FIELD_EMAIL);
+    public UserMainPage doLogin(TestBot testBot) {
+        checkVisibilityElement("Поле ввода емэйла не найдено",  FIELD_EMAIL);
         type(FIELD_EMAIL, testBot.getLogin());
 
-        checkPresentElement("Поле ввода пароля не найдено",  FIELD_PASSWORD);
+        checkVisibilityElement("Поле ввода пароля не найдено",  FIELD_PASSWORD);
         type(FIELD_PASSWORD, testBot.getPassword());
 
-        checkPresentElement("Кнопка отправки формы не найдена",  BUTTON_SUBMIT);
+        checkVisibilityElement("Кнопка отправки формы не найдена",  BUTTON_SUBMIT);
         click(BUTTON_SUBMIT);
+
+        return new UserMainPage(driver);
     }
 }

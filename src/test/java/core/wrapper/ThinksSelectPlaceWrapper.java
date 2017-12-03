@@ -25,14 +25,14 @@ public class ThinksSelectPlaceWrapper extends WrapperBase {
 
     public ThinksSelectPlaceWrapper typeAddress(String address){
         WebElement inputAddress = findElement(INPUT_ADDRESS);
-        checkPresentElement("Инпут ввода адреса не найден", inputAddress);
+        checkVisibilityElement("Инпут ввода адреса не найден", inputAddress);
         inputAddress.sendKeys(address);
         return this;
     }
 
     public ThinksSelectPlaceWrapper waitResultsLoading(){
         WebElement mapContainer = findElement(CONTAINER_MAP);
-        checkPresentElement("Блок с данными адресов не найден", mapContainer);
+        checkVisibilityElement("Блок с данными адресов не найден", mapContainer);
 
         boolean loaded = new WebDriverWait(driver, 7)
                 .until((webDriver) -> hasClass(mapContainer, "search-input_searching"));

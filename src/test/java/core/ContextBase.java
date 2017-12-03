@@ -8,6 +8,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 abstract public class ContextBase {
     protected SearchContext searchContext;
@@ -83,8 +85,32 @@ abstract public class ContextBase {
         Assert.assertTrue(messageIfUnvisible, isElementVisible(locator));
     }
 
+    protected void checkVisibilityElement(String messageIfUnvisible, WebElement webElement){
+        Assert.assertTrue(messageIfUnvisible, webElement != null && webElement.isDisplayed());
+    }
+
     protected void checkUnvisibilityElement(String messageIfVisible, By locator){
         Assert.assertFalse(messageIfVisible, isElementVisible(locator));
+    }
+
+    protected void waitPresentElement(String messageIfNone, By by, int seconds){
+        Assert.assertTrue(
+            messageIfNone,
+            (new WebDriverWait(driver, seconds)
+                .until(webDriver -> isElementPresent(by)))
+        );
+    }
+
+    protected void waitVisibilityElement(String messageIfNone, WebElement webElement, int seconds){
+        Assert.assertNotNull(
+            messageIfNone,
+            (new WebDriverWait(driver, seconds)
+                .until(ExpectedConditions.visibilityOf(webElement)))
+        );
+    }
+
+    protected void waitVisibilityElement(String messageIfNone, By by, int seconds){
+        waitVisibilityElement(messageIfNone, findElement(by), seconds);
     }
 
     public boolean hasClass(WebElement element, String searchingClass){

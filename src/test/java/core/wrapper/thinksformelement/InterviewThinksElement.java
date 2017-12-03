@@ -27,10 +27,19 @@ public class InterviewThinksElement extends ThinksFormElementWrapper {
     public InterviewThinksElement typeAnswer(int index, String answer){
         List<WebElement> inputAnswersPlaceholder = findElements(INPUT_ANSWERS_PLACEHOLDER);
         List<WebElement> inputAnswersText = findElements(INPUT_ANSWERS_TEXT);
+
         Assert.assertTrue("Нет такого числа плейсхолдеров инпутов для ответа в опросе", inputAnswersPlaceholder.size() > index);
         Assert.assertTrue("Нет такого числа инпутов для ответа в опросе", inputAnswersText.size() > index);
-        inputAnswersPlaceholder.get(index).click();
-        inputAnswersText.get(index).sendKeys(answer);
+
+        WebElement inputAnswerPlaceholder = inputAnswersPlaceholder.get(index);
+        WebElement inputAnswerText = inputAnswersText.get(index);
+
+        checkVisibilityElement("Плейсхолдер ответа интервью не найден", inputAnswerPlaceholder);
+        inputAnswerPlaceholder.click();
+
+        checkVisibilityElement("Инпут ответа интервью не найден", inputAnswerText);
+        inputAnswerText.sendKeys(answer);
+
         return this;
     }
 }

@@ -1,5 +1,7 @@
 package core.page;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,7 +19,7 @@ public class UserMainPage extends PageBase {
 
     private static final By POSTING_THINKS_INPUT = By.cssSelector("#hook_Block_PostingForm .input_placeholder");
 
-    private static final By LAST_FEED = By.cssSelector(".feed-list .feed:first-child");
+    private static final By FEEDS = By.cssSelector(".feed-list .feed");
 
     public UserMainPage(WebDriver driver) {
         super(driver);
@@ -25,19 +27,20 @@ public class UserMainPage extends PageBase {
 
     @Override
     public void check() {
-        checkPresentElement("Средняя колонка карточки пользователя не найдена", MIDDLE_COLUMN_TOP_CARD);
-        checkPresentElement("Левый блок пользователя не найден", LEFT_USER_TOPCARD);
-        checkPresentElement("Форма постинга не найдена", POSTING_THINKS_BLOCK);
+        waitPresentElement("Средняя колонка карточки пользователя не найдена", MIDDLE_COLUMN_TOP_CARD, 3);
+        waitPresentElement("Левый блок пользователя не найден", LEFT_USER_TOPCARD, 3);
+        waitPresentElement("Форма постинга не найдена", POSTING_THINKS_BLOCK, 3);
     }
 
-    public void clickOpenThink(){
-        checkPresentElement("Блок постинга не найден", POSTING_THINKS_INPUT);
+    public ThinksLayer clickOpenThink(){
+        checkVisibilityElement("Блок постинга не найден", POSTING_THINKS_INPUT);
         click(POSTING_THINKS_INPUT);
+        return new ThinksLayer(driver);
     }
 
     public OneFeedWrapper getLastFeed(){
-        WebElement oneFeed = findElement(LAST_FEED);
-        Assert.assertNotNull("Запись не найдена", oneFeed);
-        return new OneFeedWrapper(driver, oneFeed);
+        List<WebElement> oneFeed = findElements(FEEDS);
+        Assert.assertTrue("Запись не найдена", !oneFeed.isEmpty());
+        return new OneFeedWrapper(driver, oneFeed.get(0));
     }
 }

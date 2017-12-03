@@ -21,8 +21,8 @@ public class OneFeedWrapper extends WrapperBase {
 
     @Override
     public void check() {
-        checkPresentElement("Имя пользователя не найдено", USER_NAME);
-        checkPresentElement("Блок с текстом не найден", FEED_TEXT);
+        checkVisibilityElement("Имя пользователя не найдено", USER_NAME);
+        checkVisibilityElement("Блок с текстом не найден", FEED_TEXT);
     }
 
     public String getText(){
@@ -31,7 +31,7 @@ public class OneFeedWrapper extends WrapperBase {
 
     public String[] getInterviewAnswers(){
         WebElement interviewWrapper = findElement(INTERVIEW_WRAPPER);
-        checkPresentElement("Блок опроса не найден", interviewWrapper);
+        checkVisibilityElement("Блок опроса не найден", interviewWrapper);
 
         List<WebElement> interviewAnswers = interviewWrapper.findElements(INTERVIEW_ANSWERS);
         String[] interviewAnswersText = new String[interviewAnswers.size()];
@@ -43,7 +43,7 @@ public class OneFeedWrapper extends WrapperBase {
 
     public String getPlace(){
         WebElement place = findElement(PLACE);
-        checkPresentElement("Геопозиция к посту не приложена", place);
+        checkVisibilityElement("Геопозиция к посту не приложена", place);
         return place.getText();
     }
 }

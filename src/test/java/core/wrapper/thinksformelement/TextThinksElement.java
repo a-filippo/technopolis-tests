@@ -13,12 +13,12 @@ public class TextThinksElement extends ThinksFormElementWrapper {
 
     @Override
     public void check() {
-        checkPresentElement("Текстарея не найдена", TEXTAREA);
+        checkVisibilityElement("Текстарея не найдена", TEXTAREA);
     }
 
     public void type(String text){
         WebElement textarea = findElement(TEXTAREA);
-        checkPresentElement("Текстарея не найдена", textarea);
+        checkVisibilityElement("Текстарея не найдена", textarea);
         textarea.sendKeys(text);
     }
 }
